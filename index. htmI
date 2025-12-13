@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山鸡测试网 - 专业MBTI性格测试，精准解读你的人格特质</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4285F4', // Google蓝 主色
+                        secondary: '#34A853', // Google绿 辅助色
+                        accent: '#FBBC05', // Google黄 强调色
+                        neutral: '#F8F9FA', // 背景浅灰
+                        dark: '#202124', // 深色文本
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'system-ui', 'sans-serif'], // Google 无衬线字体
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .section-padding {
+                @apply py-16 md:py-24;
+            }
+            .container-custom {
+                @apply container mx-auto px-4 md:px-8 lg:px-12;
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+            }
+            .option-active {
+                @apply bg-primary text-white border-primary;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-white">
+    <!-- 头部导航 -->
+    <header class="sticky top-0 bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="container-custom">
+            <nav class="flex items-center justify-between py-4">
+                <a href="#" class="flex items-center gap-2">
+                    <span class="text-primary text-2xl"><i class="fa fa-user-circle"></i></span>
+                    <span class="font-bold text-xl">山鸡测试网</span>
+                </a>
+                <!-- 桌面端导航 -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#features" class="text-dark/80 hover:text-primary transition-colors">功能特色</a>
+                    <a href="#how-it-works" class="text-dark/80 hover:text-primary transition-colors">运作方式</a>
+                    <a href="#testimonials" class="text-dark/80 hover:text-primary transition-colors">用户评价</a>
+                    <a href="#pricing" class="text-dark/80 hover:text-primary transition-colors">定价方案</a>
+                    <a href="#faq" class="text-dark/80 hover:text-primary transition-colors">常见问题</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="#start-test" class="hidden md:block px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">开始测试</a>
+                    <!-- 移动端菜单按钮 -->
+                    <button id="menuBtn" class="md:hidden text-dark text-xl">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+            <!-- 移动端导航菜单 - 默认隐藏 -->
+            <div id="mobileMenu" class="md:hidden hidden bg-white shadow-md rounded-lg mt-2 py-4 px-4 absolute left-4 right-4 z-10">
+                <div class="flex flex-col gap-4">
+                    <a href="#features" class="text-dark/80 hover:text-primary transition-colors py-2 px-4 rounded hover:bg-neutral">功能特色</a>
+                    <a href="#how-it-works" class="text-dark/80 hover:text-primary transition-colors py-2 px-4 rounded hover:bg-neutral">运作方式</a>
+                    <a href="#testimonials" class="text-dark/80 hover:text-primary transition-colors py-2 px-4 rounded hover:bg-neutral">用户评价</a>
+                    <a href="#pricing" class="text-dark/80 hover:text-primary transition-colors py-2 px-4 rounded hover:bg-neutral">定价方案</a>
+                    <a href="#faq" class="text-dark/80 hover:text-primary transition-colors py-2 px-4 rounded hover:bg-neutral">常见问题</a>
+                    <a href="#start-test" class="text-center bg-primary text-white py-2 rounded-full hover:bg-primary/90 transition-colors">开始测试</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 页面容器：首页/答题页/结果页 切换 -->
+    <div id="page-container">
+        <!-- 首页内容 -->
+        <div id="home-page">
+            <main>
+                <!-- 英雄区 -->
+                <section id="start-test" class="section-padding bg-neutral">
+                    <div class="container-custom flex flex-col md:flex-row items-center gap-10">
+                        <div class="md:w-1/2 space-y-6">
+                            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight">
+                                专业MBTI性格测试<br>
+                                <span class="text-primary">精准解读你的人格特质</span>
+                            </h1>
+                            <p class="text-dark/70 text-lg">
+                                基于卡尔·荣格人格理论研发，超10万用户验证的专业测评体系。通过60道科学问卷，剖析你的行为倾向、思维模式，为你提供个性化发展建议。
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <button onclick="startTest()" class="px-8 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md">立即免费测试</button>
+                                <a href="#how-it-works" class="px-8 py-3 border border-primary text-primary rounded-full hover:bg-primary/5 transition-colors">了解测试原理</a>
+                            </div>
+                            <div class="flex items-center gap-4 pt-2">
+                                <div class="flex -space-x-2">
+                                    <img src="https://picsum.photos/32/32" alt="用户头像" class="w-8 h-8 rounded-full border-2 border-white">
+                                    <img src="https://picsum.photos/33/33" alt="用户头像" class="w-8 h-8 rounded-full border-2 border-white">
+                                    <img src="https://picsum.photos/34/34" alt="用户头像" class="w-8 h-8 rounded-full border-2 border-white">
+                                </div>
+                                <p class="text-sm text-dark/60">已有 <span class="font-bold text-primary">100,000+</span> 用户完成测试</p>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2">
+                            <img src="https://picsum.photos/600/400" alt="MBTI测试展示" class="w-full h-auto rounded-xl shadow-lg">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 功能特色 -->
+                <section id="features" class="section-padding">
+                    <div class="container-custom">
+                        <div class="text-center max-w-3xl mx-auto mb-16">
+                            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">专业测评 深度洞察</h2>
+                            <p class="text-dark/70 text-lg">我们的测试不止于给出结果，更提供科学、实用的个性化分析报告</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <!-- 特色1 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="w-14 h-14 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                                    <i class="fa fa-check-circle text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">精准可靠的测评体系</h3>
+                                <p class="text-dark/70">基于荣格人格类型理论，结合现代心理学研究成果，题库经专业团队反复校验，结果可信度达92%以上。</p>
+                            </div>
+                            <!-- 特色2 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="w-14 h-14 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center mb-6">
+                                    <i class="fa fa-file-text-o text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">全面深度的分析报告</h3>
+                                <p class="text-dark/70">报告包含人格类型描述、职业发展建议、适合的社交活动、待改进领域，以及清晰的类型推理过程。</p>
+                            </div>
+                            <!-- 特色3 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="w-14 h-14 bg-accent/10 text-accent rounded-lg flex items-center justify-center mb-6">
+                                    <i class="fa fa-mobile text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">全设备自适应体验</h3>
+                                <p class="text-dark/70">支持电脑、手机、平板等全终端访问，答题过程流畅无卡顿，报告支持在线查看与PDF导出。</p>
+                            </div>
+                            <!-- 特色4 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="w-14 h-14 bg-primary/10 text-primary rounded-lg flex items-center justify-center mb-6">
+                                    <i class="fa fa-lock text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">严格保护用户隐私</h3>
+                                <p class="text-dark/70">测试数据全程加密存储，不会向任何第三方泄露个人信息，用户可随时删除自己的测试记录。</p>
+                            </div>
+                            <!-- 特色5 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="w-14 h-14 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center mb-6">
+                                    <i class="fa fa-users text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">个性化社交匹配</h3>
+                                <p class="text-dark/70">基于MBTI类型，为你推荐性格契合的社交伙伴，拓展同频人脉圈，提升社交效率与质量。</p>
+                            </div>
+                            <!-- 特色6 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="w-14 h-14 bg-accent/10 text-accent rounded-lg flex items-center justify-center mb-6">
+                                    <i class="fa fa-line-chart text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">人格发展趋势追踪</h3>
+                                <p class="text-dark/70">支持多次测试，记录不同阶段的人格变化轨迹，直观展现你的成长与转变，助力自我提升。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 运作方式 -->
+                <section id="how-it-works" class="section-padding bg-neutral">
+                    <div class="container-custom">
+                        <div class="text-center max-w-3xl mx-auto mb-16">
+                            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">4步完成专业MBTI测评</h2>
+                            <p class="text-dark/70 text-lg">简单便捷的操作流程，轻松获取深度人格分析报告</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                            <!-- 步骤1 -->
+                            <div class="text-center card-hover">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">1</div>
+                                <h3 class="text-xl font-bold mb-3">填写基础信息</h3>
+                                <p class="text-dark/70">提交性别、年龄等基础信息，帮助系统更精准地校准测评结果。</p>
+                            </div>
+                            <!-- 步骤2 -->
+                            <div class="text-center card-hover">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">2</div>
+                                <h3 class="text-xl font-bold mb-3">完成专业问卷</h3>
+                                <p class="text-dark/70">回答60道专业心理测评题，题目涵盖行为、思维、决策等多个维度。</p>
+                            </div>
+                            <!-- 步骤3 -->
+                            <div class="text-center card-hover">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">3</div>
+                                <h3 class="text-xl font-bold mb-3">生成分析报告</h3>
+                                <p class="text-dark/70">系统基于你的答案，通过专业算法计算出MBTI类型，并生成详细分析报告。</p>
+                            </div>
+                            <!-- 步骤4 -->
+                            <div class="text-center card-hover">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">4</div>
+                                <h3 class="text-xl font-bold mb-3">获取发展建议</h3>
+                                <p class="text-dark/70">查看报告中的职业、社交、成长建议，解锁专属你的发展路径。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 用户评价 -->
+                <section id="testimonials" class="section-padding">
+                    <div class="container-custom">
+                        <div class="text-center max-w-3xl mx-auto mb-16">
+                            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">用户真实反馈</h2>
+                            <p class="text-dark/70 text-lg">来自不同行业、不同年龄段用户的真实体验分享</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- 评价1 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <img src="https://picsum.photos/64/64?1" alt="用户头像" class="w-12 h-12 rounded-full">
+                                    <div>
+                                        <h4 class="font-bold">李女士 | 互联网产品经理</h4>
+                                        <div class="text-accent">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-dark/70 italic">"测试结果和我的性格高度契合，报告里的职业发展建议帮我明确了下一步的晋升方向，推荐给所有想自我提升的朋友！"</p>
+                            </div>
+                            <!-- 评价2 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <img src="https://picsum.photos/64/64?2" alt="用户头像" class="w-12 h-12 rounded-full">
+                                    <div>
+                                        <h4 class="font-bold">张先生 | 在校大学生</h4>
+                                        <div class="text-accent">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star-half-o"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-dark/70 italic">"报告里的适合职业推荐，让我在考研选专业时不再迷茫，山鸡测试网的专业性远超我用过的其他测评平台。"</p>
+                            </div>
+                            <!-- 评价3 -->
+                            <div class="bg-neutral p-8 rounded-xl card-hover">
+                                <div class="flex items-center gap-4 mb-6">
+                                    <img src="https://picsum.photos/64/64?3" alt="用户头像" class="w-12 h-12 rounded-full">
+                                    <div>
+                                        <h4 class="font-bold">王女士 | 人力资源总监</h4>
+                                        <div class="text-accent">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-dark/70 italic">"我经常推荐公司新员工做这个测试，报告能帮助我们更好地进行岗位匹配和团队搭建，实用性极强。"</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 定价方案（平民价格） -->
+                <section id="pricing" class="section-padding bg-neutral">
+                    <div class="container-custom">
+                        <div class="text-center max-w-3xl mx-auto mb-16">
+                            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">灵活定价 满足不同需求</h2>
+                            <p class="text-dark/70 text-lg">免费版体验基础功能，专业版解锁深度分析，尊享版定制专属成长方案</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- 免费版 -->
+                            <div class="bg-white p-8 rounded-xl shadow border border-gray-100 card-hover">
+                                <h3 class="text-xl font-bold mb-2">基础免费版</h3>
+                                <p class="text-dark/60 mb-6">适合初次体验用户</p>
+                                <div class="text-3xl font-bold mb-6">¥0 <span class="text-sm font-normal text-dark/60">永久免费</span></div>
+                                <ul class="space-y-3 mb-8">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>完成60道基础测评题</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>获取MBTI基础类型结果</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>查看人格类型核心描述</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-dark/40">
+                                        <i class="fa fa-times text-gray-400 mt-1"></i>
+                                        <span>深度职业发展建议</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-dark/40">
+                                        <i class="fa fa-times text-gray-400 mt-1"></i>
+                                        <span>PDF报告导出</span>
+                                    </li>
+                                </ul>
+                                <button onclick="startTest()" class="block w-full py-3 text-center border border-primary text-primary rounded-full hover:bg-primary/5 transition-colors">立即使用</button>
+                            </div>
+                            <!-- 专业版（平民价） -->
+                            <div class="bg-white p-8 rounded-xl shadow-lg border-2 border-primary relative card-hover -translate-y-4 md:-translate-y-0">
+                                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white text-sm py-1 px-4 rounded-full">最受欢迎</div>
+                                <h3 class="text-xl font-bold mb-2">专业分析版</h3>
+                                <p class="text-dark/60 mb-6">适合自我提升用户</p>
+                                <div class="text-3xl font-bold mb-6">¥6.9 <span class="text-sm font-normal text-dark/60">终身解锁</span></div>
+                                <ul class="space-y-3 mb-8">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>包含免费版全部功能</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>深度职业发展匹配建议</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>适合的社交活动推荐</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>人格待改进领域分析</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>PDF报告导出与分享</span>
+                                    </li>
+                                </ul>
+                                <button class="block w-full py-3 text-center bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md">立即解锁</button>
+                            </div>
+                            <!-- 尊享版（平民价） -->
+                            <div class="bg-white p-8 rounded-xl shadow border border-gray-100 card-hover">
+                                <h3 class="text-xl font-bold mb-2">尊享定制版</h3>
+                                <p class="text-dark/60 mb-6">适合深度发展用户</p>
+                                <div class="text-3xl font-bold mb-6">¥29.9 <span class="text-sm font-normal text-dark/60">终身会员</span></div>
+                                <ul class="space-y-3 mb-8">
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>包含专业版全部功能</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>1对1人格发展咨询服务</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>人格变化趋势追踪</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>个性化社交匹配推荐</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <i class="fa fa-check text-secondary mt-1"></i>
+                                        <span>专属成长规划方案</span>
+                                    </li>
+                                </ul>
+                                <button class="block w-full py-3 text-center border border-primary text-primary rounded-full hover:bg-primary/5 transition-colors">立即开通</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 常见问题 -->
+                <section id="faq" class="section-padding">
+                    <div class="container-custom">
+                        <div class="text-center max-w-3xl mx-auto mb-16">
+                            <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4">常见问题</h2>
+                            <p class="text-dark/70 text-lg">解答你关于MBTI测试的所有疑问</p>
+                        </div>
+                        <div class="max-w-3xl mx-auto space-y-6">
+                            <!-- 问题1 -->
+                            <div class="bg-neutral p-6 rounded-xl">
+                                <h3 class="font-bold text-lg mb-2">山鸡测试网的MBTI测评与其他平台有什么区别？</h3>
+                                <p class="text-dark/70">我们的测评题库由心理学专业团队研发，基于荣格理论与现代实证研究，结果可信度更高。报告不仅给出类型，还详细解释推理过程，提供可落地的发展建议，而非简单的性格标签。</p>
+                            </div>
+                            <!-- 问题2 -->
+                            <div class="bg-neutral p-6 rounded-xl">
+                                <h3 class="font-bold text-lg mb-2">测试结果会保存多久？可以删除吗？</h3>
+                                <p class="text-dark/70">免费版用户的测试结果保存30天，专业版和尊享版用户的结果永久保存。所有用户均可在个人中心手动删除测试记录，删除后数据将彻底清除，无法恢复。</p>
+                            </div>
+                            <!-- 问题3 -->
+                            <div class="bg-neutral p-6 rounded-xl">
+                                <h3 class="font-bold text-lg mb-2">MBTI测试结果是一成不变的吗？</h3>
+                                <p class="text-dark/70">人格类型具有相对稳定性，但在不同人生阶段、经历重大事件后，部分维度可能会发生轻微变化。我们建议每6-12个月重新测试一次，追踪人格发展轨迹。</p>
+                            </div>
+                            <!-- 问题4 -->
+                            <div class="bg-neutral p-6 rounded-xl">
+                                <h3 class="font-bold text-lg mb-2">付费后不满意可以退款吗？</h3>
+                                <p class="text-dark/70">专业版和尊享版付费后，若你对报告内容不满意，可在购买后7天内申请全额退款，无需说明理由。退款后，相关付费功能将被收回，已导出的报告可继续保留。</p>
+                            </div>
+                            <!-- 问题5 -->
+                            <div class="bg-neutral p-6 rounded-xl">
+                                <h3 class="font-bold text-lg mb-2">企业可以采购批量测评服务吗？</h3>
+                                <p class="text-dark/70">可以。我们提供企业定制化测评服务，支持批量创建测试账号、生成团队分析报告、开展线下解读培训等。如需了解详情，可联系客服获取企业方案。</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- 答题页面 - 默认隐藏 -->
+        <div id="test-page" class="hidden section-padding bg-neutral">
+            <div class="container-custom max-w-3xl mx-auto">
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <!-- 答题进度 -->
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="flex items-center gap-2">
+                            <span class="text-primary font-bold text-xl"><i class="fa fa-question-circle"></i></span>
+                            <span class="font-bold">MBTI 专业测评问卷</span>
+                        </div>
+                        <div class="text-dark/60">
+                            第 <span id="current-question">1</span> 题 / 共 <span id="total-questions">10</span> 题
+                        </div>
+                    </div>
+
+                    <!-- 进度条 -->
+                    <div class="w-full h-2 bg-neutral rounded-full mb-8 overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-primary rounded-full transition-all duration-300" style="width: 10%"></div>
+                    </div>
+
+                    <!-- 题目内容 -->
+                    <div id="question-content" class="mb-8">
+                        <h3 class="text-lg font-bold mb-6" id="question-text">在聚会中，你更倾向于？</h3>
+                        <div class="space-y-3" id="options-list">
+                            <button onclick="selectOption('E')" class="w-full py-3 px-4 border rounded-lg text-left hover:border-primary transition-colors">A. 主动和新朋友交流，成为焦点</button>
+                            <button onclick="selectOption('I')" class="w-full py-3 px-4 border rounded-lg text-left hover:border-primary transition-colors">B. 待在熟悉的人身边，安静观察</button>
+                        </div>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="flex justify-between">
+                        <button onclick="prevQuestion()" id="prev-btn" class="px-6 py-2 border border-gray-300 rounded-full text-dark/60 hover:border-primary hover:text-primary transition-colors hidden">上一题</button>
+                        <button onclick="nextQuestion()" id="next-btn" class="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors">下一题</button>
+                        <button onclick="submitTest()" id="submit-btn" class="px-6 py-2 bg-secondary text-white rounded-full hover:bg-secondary/90 transition-colors hidden">提交测评</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结果页面 - 默认隐藏 -->
+        <div id="result-page" class="hidden section-padding bg-neutral">
+            <div class="container-custom max-w-4xl mx-auto">
+                <div class="bg-white rounded-xl shadow-lg p-8 md:p-12">
+                    <!-- 结果头部 -->
+                    <div class="text-center mb-10">
+                        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-2">你的 MBTI 人格类型是</h2>
+                        <div class="text-5xl font-bold text-primary mb-4" id="mbti-type">INFJ</div>
+                        <p class="text-dark/70 text-lg">提倡者 | 富有洞察力与理想主义的引导者</p>
+                    </div>
+
+                    <!-- 人格描述 -->
+                    <div class="mb-10">
+                        <h3 class="text-xl font-bold mb-4">人格类型核心描述</h3>
+                        <p class="text-dark/70 leading-relaxed">
+                            INFJ 型人格是富有洞察力、富有创造力的理想主义者，他们善于思考宏大的理念和长远的规划。你注重内在的价值观和意义，乐于帮助他人成长，拥有敏锐的直觉和深刻的同理心。在生活中，你更倾向于深度思考而非表面社交，喜欢在安静的环境中专注于自己的目标，常常能洞察到事物背后的本质和规律。
+                        </p>
+                    </div>
+
+                    <!-- 发展建议 -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">适合的职业方向</h3>
+                            <ul class="space-y-2 text-dark/70">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-check text-secondary mt-1"></i>
+                                    <span>心理咨询师、职业规划师</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-check text-secondary mt-1"></i>
+                                    <span>作家、编辑、内容创作者</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-check text-secondary mt-1"></i>
+                                    <span>教育工作者、公益组织负责人</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-check text-secondary mt-1"></i>
+                                    <span>人力资源管理、企业培训师</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">待改进的领域</h3>
+                            <ul class="space-y-2 text-dark/70">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-exclamation-circle text-accent mt-1"></i>
+                                    <span>避免过度思考，学会活在当下</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-exclamation-circle text-accent mt-1"></i>
+                                    <span>增强拒绝他人的能力，避免过度消耗</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-exclamation-circle text-accent mt-1"></i>
+                                    <span>减少完美主义倾向，接受不完美的自己</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa fa-exclamation-circle text-accent mt-1"></i>
+                                    <span>主动拓展社交圈，提升人际交往能力</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 结果操作按钮 -->
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button onclick="restartTest()" class="px-8 py-3 border border-primary text-primary rounded-full hover:bg-primary/5 transition-colors">重新测试</button>
+                        <button class="px-8 py-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md">解锁完整报告</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container-custom">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <span class="text-primary text-2xl"><i class="fa fa-user-circle"></i></span>
+                        <span class="font-bold text-xl">山鸡测试网</span>
+                    </a>
+                    <p class="text-white/60 mb-6">专业的MBTI性格测评平台，助力个人成长与职业发展</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
+                            <i class="fa fa-qq"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">快速链接</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#features" class="text-white/60 hover:text-primary transition-colors">功能特色</a></li>
+                        <li><a href="#how-it-works" class="text-white/60 hover:text-primary transition-colors">运作方式</a></li>
+                        <li><a href="#testimonials" class="text-white/60 hover:text-primary transition-colors">用户评价</a></li>
+                        <li><a href="#pricing" class="text-white/60 hover:text-primary transition-colors">定价方案</a></li>
+                        <li><a href="#faq" class="text-white/60 hover:text-primary transition-colors">常见问题</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">相关资源</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors">MBTI理论科普</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors">人格发展指南</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors">职业匹配手册</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors">团队搭建建议</a></li>
+                        <li><a href="#" class="text-white/60 hover:text-primary transition-colors">心理学知识库</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6">联系我们</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-envelope-o text-primary mt-1"></i>
+                            <span class="text-white/60">contact@shanji-test.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-phone text-primary mt-1"></i>
+                            <span class="text-white/60">400-123-4567</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa fa-map-marker text-primary mt-1"></i>
+                            <span class="text-white/60">北京市海淀区中关村大街1号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/10 text-center text-white/40 text-sm">
+                <p>© 2025 山鸡测试网 版权所有 | 京ICP备12345678号 | 京公网安备11010802034567号</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单交互逻辑
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = menuBtn.querySelector('i');
+
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            }
+        });
+
+        // 点击移动端菜单项后自动收起菜单
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // MBTI测试核心逻辑
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        const mbtiDimensions = ['E/I', 'S/N', 'T/F', 'J/P'];
+        
+        // 测试题库（10题，覆盖4个维度）
+        const questions = [
+            { text: "在聚会中，你更倾向于？", options: [{key:'E', text:'A. 主动和新朋友交流，成为焦点'}, {key:'I', text:'B. 待在熟悉的人身边，安静观察'}], dimension: 'E/I' },
+            { text: "获取信息时，你更相信？", options: [{key:'S', text:'A. 具体的事实和经验'}, {key:'N', text:'B. 直觉和未来的可能性'}], dimension: 'S/N' },
+            { text: "做决策时，你更依赖？", options: [{key:'T', text:'A. 逻辑分析和客观标准'}, {key:'F', text:'B. 个人价值观和他人感受'}], dimension: 'T/F' },
+            { text: "安排生活时，你更偏好？", options: [{key:'J', text:'A. 有计划、有条理的生活'}, {key:'P', text:'B. 灵活、随性的生活'}], dimension: 'J/P' },
+            { text: "遇到问题时，你会先？", options: [{key:'E', text:'A. 找朋友讨论寻求建议'}, {key:'I', text:'B. 自己独立思考解决方案'}], dimension: 'E/I' },
+            { text: "学习新知识时，你更关注？", options: [{key:'S', text:'A. 细节和具体应用'}, {key:'N', text:'B. 框架和整体概念'}], dimension: 'S/N' },
+            { text: "评价他人时，你更看重？", options: [{key:'T', text:'A. 能力和效率'}, {key:'F', text:'B. 品德和友善'}], dimension: 'T/F' },
+            { text: "面对截止日期，你通常？", options: [{key:'J', text:'A. 提前完成，留出缓冲时间'}, {key:'P', text:'B. 临近截止才高效完成'}], dimension: 'J/P' },
+            { text: "空闲时间，你更愿意？", options: [{key:'E', text:'A. 参加户外活动或聚会'}, {key:'I', text:'B. 在家看书或看电影'}], dimension: 'E/I' },
+            { text: "看待规则时，你认为？", options: [{key:'J', text:'A. 规则是秩序的保障，应该遵守'}, {key:'P', text:'B. 规则是灵活的，可以根据情况调整'}], dimension: 'J/P' }
+        ];
+
+        // 开始测试
+        function startTest() {
+            document.getElementById('home-page').classList.add('hidden');
+            document.getElementById('test-page').classList.remove('hidden');
+            document.getElementById('result-page').classList.add('hidden');
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            renderQuestion();
+        }
+
+        // 重新测试
+        function restartTest() {
+            startTest();
+        }
+
+        // 渲染当前题目
+        function renderQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = questions.length;
+            document.getElementById('question-text').textContent = question.text;
+            
+            // 渲染选项
+            const optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+            question.options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full py-3 px-4 border rounded-lg text-left hover:border-primary transition-colors';
+                btn.textContent = option.text;
+                btn.onclick = () => selectOption(option.key, question.dimension);
+                // 高亮已选选项
+                if (userAnswers[question.dimension] === option.key) {
+                    btn.classList.add('option-active');
+                }
+                optionsList.appendChild(btn);
+            });
+
+            // 更新进度条
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            // 控制按钮显示
+            document.getElementById('prev-btn').classList.toggle('hidden', currentQuestionIndex === 0);
+            document.getElementById('next-btn').classList.toggle('hidden', currentQuestionIndex === questions.length - 1);
+            document.getElementById('submit-btn').classList.toggle('hidden', currentQuestionIndex !== questions.length - 1);
+        }
+
+        // 选择选项
+        function selectOption(key, dimension) {
+            userAnswers[dimension] = key;
+            // 高亮选中的选项
+            const options = document.querySelectorAll('#options-list button');
+            options.forEach(btn => btn.classList.remove('option-active'));
+            event.target.classList.add('option-active');
+        }
+
+        // 上一题
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        // 提交测试
+        function submitTest() {
+            // 计算MBTI类型
+            let mbtiType = '';
+            mbtiType += userAnswers['E/I'] || 'I'; // 默认内向
+            mbtiType += userAnswers['S/N'] || 'N'; // 默认直觉
+            mbtiType += userAnswers['T/F'] || 'F'; // 默认情感
+            mbtiType += userAnswers['J/P'] || 'J'; // 默认判断
+
+            // 显示结果
+            document.getElementById('mbti-type').textContent = mbtiType;
+            document.getElementById('test-page').classList.add('hidden');
+            document.getElementById('result-page').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
